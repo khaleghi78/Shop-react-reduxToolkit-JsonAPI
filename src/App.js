@@ -1,10 +1,17 @@
 import './App.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {Home, Cart, CategoryProduct, ProductSingle, Search } from './pages/index';
+import Header from './components/Header/Header'
+import Sidebar from './components/Sidebar/Sidebar'
+import Footer from './components/Footer/Footer'
+
 
 function App() {
   return (
     <div className="App">
-     hello
+      <BrowserRouter>
+      <Header />
+      </BrowserRouter>
     </div>
   );
 }
