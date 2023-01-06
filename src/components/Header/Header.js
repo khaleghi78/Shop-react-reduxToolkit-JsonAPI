@@ -62,7 +62,7 @@ const Header = () => {
                 </li>
               </ul>
             </div>
-          </div> 
+          </div>
 
           <div className='header-cnt-bottom'>
             <Navbar />
@@ -70,7 +70,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

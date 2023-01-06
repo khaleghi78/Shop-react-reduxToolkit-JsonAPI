@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
     isSidebarOn: false
@@ -9,14 +9,14 @@ const sidebarSlice = createSlice({
     initialState,
     reducers: {
         setSidebarOn: (state) => {
-            state.isSidebarOn = true
+            state.isSidebarOn = true;
         },
 
         setSidebarOff: (state) => {
-            state.isSidebarOn = false
+            state.isSidebarOn = false;
         }
-    }
-})
+    },
+});
 
 export const {setSidebarOn, setSidebarOff} = sidebarSlice.actions;
 export const getSidebarStatus = (state) => state.sidebar.isSidebarOn;

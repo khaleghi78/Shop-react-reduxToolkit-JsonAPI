@@ -6,7 +6,7 @@ const initialState = {
     categories: [],
     categoriesStatus: STATUS.IDLE,
     categoryProducts: [],
-    categoryProductStatus: STATUS.IDLE
+    categoryProductsStatus: STATUS.IDLE
 }
 
 const categorySlice = createSlice({

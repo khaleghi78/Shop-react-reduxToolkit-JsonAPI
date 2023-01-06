@@ -9,6 +9,7 @@ const Navbar = () => {
 const dispatch = useDispatch()
 const categories = useSelector(getAllCategories)
 
+
   return (
     <nav className='navbar'>
       <div className='navbar-cnt flex align-center'>
@@ -43,7 +44,8 @@ const categories = useSelector(getAllCategories)
             {
               categories.slice(0, 8).map((category, idx) => (
                 <li className='nav-item no-wrap' key={idx}>
-                <Link to={`category/${category}`} className='nav-link text-capitalize'>{category}</Link>
+                <Link to={`category/${category}`} 
+                className='nav-link text-capitalize'>{category.replace("-", " ")}</Link>
                 </li>
               ))
             }
