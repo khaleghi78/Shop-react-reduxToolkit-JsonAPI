@@ -14,16 +14,49 @@ const ProductSingle = () => {
   const dispatch = useDispatch()
   const product = useSelector(getProductSingle)
   const productSingleStatus = useSelector(getSingleProductStatus)
+  const [quantity, setQuantity] = useState(1)
+  const CartMessageStatus = useSelector(getCartMessageStatus);
 
   // get single product 
 
   useEffect(() => {
   dispatch(fetchAsyncProductSingle(id))
+
+  if(getCartMessageStatus) {
+    setTimeout(() => {
+      dispatch(setCartMessageOff())
+    }, 2000)
+  }
   }, [])
 
 let discountedPrice = (product?.price) - (product?.price * (product?.discountPercentage / 100))
 if(productSingleStatus === STATUS.LOADING) {
   return <Loader />
+}
+
+const increaseQty = () => {
+  setQuantity((prevQty) => {
+    let tempQty = prevQty + 1;
+    if(tempQty > product?.stock) tempQty = product?.stock;
+    return tempQty
+  })
+}
+
+
+const decreaseQty = () => {
+  setQuantity((prevQty) => {
+    let tempQty = prevQty - 1;
+    if(tempQty < 1) tempQty = 1;
+    return tempQty;
+  })
+}
+
+const addToCartHandler = (product) => {
+  let discountedPrice = (product?.price) - (product?.price * (product?.discountPercentage / 100));
+  let totalPrice = quantity * discountedPrice;
+  dispatch(addToCart({...product, quantity: quantity, 
+  totalPrice, discountedPrice}))
+  dispatch(setCartMessageOn(true));
 }
 
   return (
@@ -108,11 +141,13 @@ if(productSingleStatus === STATUS.LOADING) {
                <div className='qty flex align-center my-4'>
                 <div className='qty-text'>Quantity:</div>
                 <div className='qty-change flex align-center mx-3'>
-                  <button type='button' className='qty-decrease flex align-center justify-center'>
+                  <button type='button' 
+                  className='qty-decrease flex align-center justify-center' onClick={() => decreaseQty()}>
                     <i className='fas fa-minus'></i>
                   </button>
-                  <div className='qty-value flex align-center justify-center'>{}</div>
-                  <button type='button' className='qty-increase flex align-center justify-center'>
+                  <div className='qty-value flex align-center justify-center'>{quantity}</div>
+                  <button type='button'
+                   className='qty-increase flex align-center justify-center' onClick={() => increaseQty()}>
                     <i className='fas fa-plus'></i>
                   </button>
                 </div>
@@ -125,7 +160,7 @@ if(productSingleStatus === STATUS.LOADING) {
               <div className='btns'>
                 <button type='button' className='add-to-cart-btn btn'>
                   <i className='fas fa-shopping-cart'></i>
-                  <span className='btn-text mx-2'>add to cart</span>
+                  <span className='btn-text mx-2' onClick={() => { addToCartHandler(product) }}>add to cart</span>
                 </button>
                 <button type='button' className='buy-now btn mx-3'>
                   <span className='btn-text'>buy now</span>
@@ -137,6 +172,7 @@ if(productSingleStatus === STATUS.LOADING) {
       </div>
       </div>
 
+    { getCartMessageStatus && <CartMessage /> }
     </main>
   )
 }
