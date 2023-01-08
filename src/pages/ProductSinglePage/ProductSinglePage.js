@@ -27,7 +27,7 @@ const ProductSingle = () => {
       dispatch(setCartMessageOff())
     }, 2000)
   }
-  }, [])
+  }, [CartMessageStatus])
 
 let discountedPrice = (product?.price) - (product?.price * (product?.discountPercentage / 100))
 if(productSingleStatus === STATUS.LOADING) {
